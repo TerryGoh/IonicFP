@@ -1,0 +1,11 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+  <button style="background-color:transparent;" (click)="presentPopover()"><img src="assets/images/Human.png"><br/></button>
+  </ion-buttons>
+  <div *ngIf="sessionheaderdata">
+  <ion-title style="text-align: center;" ><b>{{sessionheaderdata.session_Title}}</b><br/><ion-label style="font-size: medium;" *ngIf="sessionheaderdata.subject_DisplayName!=null||sessionheaderdata.level_DisplayName!=null" >{{sessionheaderdata.subject_DisplayName}} ({{sessionheaderdata.level_DisplayName}})</ion-label></ion-title>
+</div>
+  <ion-buttons slot="end">
+    <button style="background-color:transparent;" (click)="EndSession()"><img src="assets/images/EndButton.png"><br/></button>
+  </ion-buttons>
+</ion-toolbar>

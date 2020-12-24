@@ -1,0 +1,152 @@
+.center {
+    text-align: center;
+}
+
+ion-title {
+    text-align: center;
+}
+
+.p {
+    color: #1c91a8;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.ionbutton {
+    // --width: 500px;
+    --vertical-align: middle;
+    --padding-start: 100px;
+    --padding-end: 100px;
+    text-align: center;
+    font-family: 'Roboto';
+    // padding: 1000;
+    display: flex;
+    align-items: center;
+   
+    
+  }
+
+  .error-message {
+    color: red;
+  }
+  input.ng-touched.ng-invalid {
+    border: 1px solid red;
+  }
+
+  ion-button {
+      // --width: 500px;
+    --vertical-align: middle;
+    --padding-start: 100px;
+    --padding-end: 100px;
+    text-align: center;
+    font-family: 'Roboto';
+    // padding: 1000;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  .form > input
+{
+  // float: left;
+  clear: right;
+}
+
+.form > ion-icon
+{
+  margin: -38px 25px;
+  float: right;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-top: -100px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;.tooltip {
+    position: relative;
+    display: inline-block;
+    margin-top: -100px;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  padding: 5px 0;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.form-control.userInput {
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 20px 0 20px 17px;
+}
+.form-control.date {
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 25px 0 25px 30px;
+}
+
+.form-control.list {
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px 23px 10px 17px;
+}
+
+.form-control.coupon {
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  padding: 20px 0 20px 17px;
+}
+
+::placeholder{
+  margin-left: 5px;
+}
+  
+#coupon {
+  border: 2px dashed darkblue;
+  // border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.new-background-color {
+  --background: #1c91a8;
+}
+
+ion-title{
+  --color: #ffffff;
+}

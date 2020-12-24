@@ -1,0 +1,104 @@
+.center {
+    text-align: center;
+}
+
+ion-title {
+    text-align: center;
+}
+
+.p {
+    color: #1c91a8;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.ionbutton {
+    // --width: 500px;
+    --vertical-align: middle;
+    --padding-start: 100px;
+    --padding-end: 100px;
+    text-align: center;
+    font-family: 'Roboto';
+    // padding: 1000;
+    display: flex;
+    align-items: center;
+   
+    
+  }
+
+  .error-message {
+    color: red;
+  }
+  input.ng-touched.ng-invalid {
+    border: 1px solid red;
+  }
+
+  ion-button {
+      // --width: 500px;
+    --vertical-align: middle;
+    --padding-start: 100px;
+    --padding-end: 100px;
+    text-align: center;
+    font-family: 'Roboto';
+    // padding: 1000;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  .form > input
+{
+  // float: left;
+  clear: right;
+}
+
+.form > ion-icon
+{
+  margin: -25px 100px;
+  float: right;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-top: -100px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;.tooltip {
+    position: relative;
+    display: inline-block;
+    margin-top: -100px;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  padding: 5px 0;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+  

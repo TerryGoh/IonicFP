@@ -1,0 +1,16 @@
+<ion-header>
+  <h2 class="title" style="font-size: large;padding:2%;"><b>Invite Friends</b><ion-icon style="float: right;" src="assets/images/pop-up-cross.svg" (click)="closePopover()"></ion-icon> </h2>
+</ion-header>
+<div style="display: flex; justify-content: center;align-items: center;padding:2%">{{displayaddedparticipants}}</div>
+<div style="display: flex; justify-content: center;align-items: center;"><button class="popoverinvitebutton" (click)="invitefriends()"><b>Invite Friend</b></button></div>
+<ion-content>
+  
+  <h2 class="title"><ion-searchbar [(ngModel)]="searchParticipant" animated="true"></ion-searchbar></h2>
+   <div class="container" *ngFor="let participant of textdisplayparticipant| filter:searchParticipant">
+      <div class="popovercss" *ngIf="participant.toBeInvited==='N'">
+       ({{participant.levelInfo_DisplayName}}) <b>{{participant.username}}</b><label (click) = "AddParticipant(participant)" *ngIf="participant.toBeInvited==='N'" class="popoveraddlabel">Add</label>
+      </div> 
+    </div>
+</ion-content>
+
+

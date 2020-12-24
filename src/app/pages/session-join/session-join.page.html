@@ -1,0 +1,41 @@
+<!--After Tutor Accept (Session not yet end,student not yet join)-->
+<app-main-header></app-main-header>
+<ion-content>
+  <ion-refresher slot='fixed' (ionRefresh)='UpdateData($event)'>
+    <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  <ul class="breadcrumb" id="breadcrumbs">
+    <li style="display: inline;"><a href="/tabs/main"> Home </a><i class="ion-chevron-right"></i></li>
+    <li style="display: inline;" class="active"> Join Session </li>
+  </ul>    
+  <div class="fourthcontent">
+    <div *ngIf="boolHaveSession" style="font-size: larger;"><b>{{NoSessionText}}</b></div>
+  <ion-list *ngFor="let item of textdisplay; let i = index" class="accordion-list" lines="none" detail="false" >
+    <ion-grid tappable style="background-color: #d9f6ff;" [ngClass]="{'section-active': item.open, 'section': !item.open}">
+      <ion-row>
+        <ion-col size="10">
+            <b class="defaultgreenfont" style="font-size: large;">{{item.session_Title}}<br/></b>
+            <ion-label class="defaultgreenfont">{{item.subject_DisplayName}}({{item.level_DisplayName}})<br/></ion-label>
+              <ion-label class="defaultgreenfont">Participant({{item.num_Of_Participants}}):[SV]{{item.tutor_Name}}; [IS]{{item.initiator_Name}}<br/></ion-label> 
+          </ion-col> 
+          <ion-col size="2">
+      <button class="buttonjoinsession" (click)="CallAPIJoinSession(item.session_Id)"><b>Join</b></button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <br/>
+      <div style="color: black; position: absolute;left: 50%;" (click)="toggleSection(i)" [ngClass] ="{'section-active' : item.open, 'section': !item.open}">
+        <ion-icon src="assets/images/063-down-arrow-5.svg" (click)="SanitizeImage(item.session_Question_Data)" *ngIf="!item.open" ></ion-icon>
+        <ion-icon src="assets/images/006-up-arrow-6.svg" *ngIf="item.open" style="color: black;"></ion-icon>
+   </div> 
+    </ion-row>
+  </ion-grid>
+    <div *ngIf="item.open">
+          <div style="border:dashed #1c91a8;">
+            <p *ngIf="item.session_Question_Data!=null"><img [src]="imgdisplayinapp" alt="Image" onerror="this.style.display='none'"/></p> <!--Question Image-->
+            <label>{{item.session_Question_Text}}</label> <!--Question Text-->
+        </div>
+    </div>
+</ion-list>
+</div>
+</ion-content>

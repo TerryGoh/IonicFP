@@ -1,0 +1,7 @@
+{
+  "name": "UPS_Student",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

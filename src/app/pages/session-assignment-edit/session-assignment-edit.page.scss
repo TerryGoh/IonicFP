@@ -1,0 +1,59 @@
+
+.color-block {
+  height: 1em;
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #d9f6ff;
+  padding: 0.5em 0.5em;
+}
+.iconclick:active{
+  outline: black solid 1px;
+}
+// #iconclick1:focus{
+//   outline: black solid 1px;
+// }
+
+span {
+  width: 1em;
+  height: 1em;
+  zoom:2.5;
+}
+ion-fab-button {
+  --background: transparent;
+}
+#qns{
+// position:absolute;
+background-color: transparent;
+
+}
+.box{
+  margin: 0 auto;
+}
+#canvas{
+  position:static;
+  bottom:0.1em; left:0em; right: 0em;
+  width:100%;
+  outline:black solid 1px;
+}
+#wrappalette{
+// position: static;
+bottom: 0;
+width: 100%;
+}
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+
+
+}
+.card {
+  // display: block;
+  background-color: transparent;
+
+}

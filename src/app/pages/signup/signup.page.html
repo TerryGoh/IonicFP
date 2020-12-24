@@ -1,0 +1,170 @@
+  <ion-header>
+    <ion-toolbar class="new-background-color">
+      <ion-title>Student Learning Platform</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <link href="https://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet"> 
+
+  <ion-content padding='true'>
+    <div class="container">
+
+      <div style="margin: 30px">
+        <p class="p">Sign Up An Account (Student)</p>
+    <br>
+        <form class="container" [formGroup]="loginForm">
+          <div class="form-group">
+            <ion-label position="stacked">Username <span style="color: red">*</span></ion-label>
+            <input class="form-control userInput" formControlName="username" type="text" autocomplete="off" name="username" placeholder="Enter username" [(ngModel)]="postData.Username"/>
+          </div>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of error_messages.username">
+              <div class="error-message" *ngIf="loginForm.get('username').hasError(error.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+          </div>
+    <br>
+          <div class="form-group">
+            <ion-label position="stacked">Password <span style="color: red">*</span></ion-label>
+            <div class="form">
+            <input autocomplete="off" name="password" class="form-control userInput" formControlName="password" placeholder="Enter password" [type]="showPassword ? 'text': 'password'" [(ngModel)]="postData.Password"/>
+            <ion-icon slot="end" [name]="passwordToggleIcon" (click)="togglePassword()"></ion-icon>
+            </div >
+          </div>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of error_messages.password">
+              <div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+          </div>
+          
+    <br>
+          <div class="form-group">
+            <ion-label position="stacked">Confirm Password <span style="color: red">*</span></ion-label>
+            <div class="form">
+            <input autocomplete="off" name="confirmpassword" class="form-control userInput" formControlName="confirmpassword" placeholder="Enter password to confirm" [type]="showPassword1 ? 'text': 'password'" />
+            <ion-icon slot="end" [name]="passwordToggleIcon1" (click)="togglePassword1()"></ion-icon>
+          </div>
+          </div>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of error_messages.confirmpassword">
+              <div class="error-message" *ngIf="loginForm.get('confirmpassword').hasError(error.type) && (loginForm.get('confirmpassword').dirty || loginForm.get('confirmpassword').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+            <div class="error-message" *ngIf="!loginForm.get('confirmpassword').errors && loginForm.hasError('passwordNotMatch') && (loginForm.get('confirmpassword').dirty || loginForm.get('confirmpassword').touched)">
+              Password and Confirm Password fields should match
+            </div>
+          </div>
+<br>
+            <div class="form-group">
+              <ion-label position="stacked">Email <span style="color: red">*</span></ion-label>
+              <input autocomplete="off" name="email" class="form-control userInput" formControlName="email" type="email" placeholder="Eg.sally@gmail.com" [(ngModel)]="postData.Email"/>
+            </div>
+            <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.email">
+                <div class="error-message" *ngIf="loginForm.get('email').hasError(error.type) && 
+          (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                  {{ error.message }}
+                </div>
+              </ng-container>
+            </div>
+<br>
+            <div class="form-group">
+              <ion-label position="stacked">School <span style="color: red">*</span></ion-label>
+              <ion-select autocomplete="off" name="school" formControlName="school" class="form-control list" placeholder="Select school" [(ngModel)]="postData.School_Id">
+                <ion-select-option *ngFor="let school of textdisplayschool" value="{{school.school_Id}}">{{school.school_DisplayName}}</ion-select-option>
+              </ion-select>
+              <!-- <ion-select name="school" class="form-control list" formControlName="school" type="text" placeholder="Select school" [(ngModel)]="postData.School_Id">
+                <ion-select-option value="S001" placeholder = 'S001'>Admiralty PS</ion-select-option>
+                <ion-select-option value="S002">Ahmad Ibrahim PS</ion-select-option>
+                <ion-select-option value="S003">Ai Tong School</ion-select-option>
+                <ion-select-option value="S004">Alexandra PS</ion-select-option>
+                <ion-select-option value="S005">Anchor Green PS</ion-select-option>
+                <ion-select-option value="S006">Anderson PS</ion-select-option>
+                <ion-select-option value="S007">Ang Mo Kio PS</ion-select-option>
+                <ion-select-option value="S008">Anglo-Chinese School</ion-select-option>
+                <ion-select-option value="S010">Angsana PS</ion-select-option>
+                <ion-select-option value="S011">Beacon PS</ion-select-option>
+                <ion-select-option value="S012">Bedok Green PS</ion-select-option>
+              </ion-select> -->
+            </div>
+            <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.school">
+                <div class="error-message" *ngIf="loginForm.get('school').hasError(error.type) && 
+          (loginForm.get('school').dirty || loginForm.get('school').touched)">
+                  {{ error.message }}
+                </div>
+              </ng-container>
+            </div>
+
+
+
+<br>
+            <div class="form-group">
+              <ion-label position="stacked">Level <span style="color: red">*</span></ion-label>
+              <ion-select autocomplete="off" name="level" formControlName="level" class="form-control list" [(ngModel)]="postData.Level_Id" placeholder="Select level">
+                <ion-select-option *ngFor="let level of textdisplaylevel" value="{{level.level_Id}}">{{level.level_Name}} {{level.level_Num}} ({{level.level_Id}})</ion-select-option>
+              </ion-select>
+            <!-- <ion-select autocomplete="off" name="level" class="form-control list" formControlName="level" type="text" placeholder="Select level" [(ngModel)]="postData.Level_Id">
+              <ion-select-option value="p1">P1</ion-select-option>
+              <ion-select-option value="p2">P2</ion-select-option>
+              <ion-select-option value="p3">P3</ion-select-option>
+              <ion-select-option value="p4">P4</ion-select-option>
+              <ion-select-option value="p5">P5</ion-select-option>
+              <ion-select-option value="p6">P6</ion-select-option>
+            </ion-select> -->
+            </div>
+            <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.level">
+                <div class="error-message" *ngIf="loginForm.get('level').hasError(error.type) && 
+          (loginForm.get('level').dirty || loginForm.get('level').touched)">
+                  {{ error.message }}
+                </div>
+              </ng-container>
+            </div>
+<br>
+            <div class="form-group">
+              <ion-label position="stacked">Date of Birth <span style="color: red">*</span></ion-label>
+              <ion-input [(ngModel)]="postData.DateOfBirth" (click)="SelectDate()" placeholder="Enter date of birth" autocomplete="off" name="dob" class="form-control date" formControlName="dob">&nbsp;&nbsp;&nbsp;</ion-input>         
+
+            </div>
+            <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.dob">
+                <div class="error-message" *ngIf="loginForm.get('dob').hasError(error.type) && 
+          (loginForm.get('dob').dirty || loginForm.get('dob').touched)">
+                  {{ error.message }}
+                </div>
+              </ng-container>
+            </div> 
+
+<br>
+            <div class="form-group" id="coupon">
+              <ion-label position="stacked">Coupon Code <span style="color: red">*</span></ion-label>
+              <input autocomplete="off" name="coupon" class="form-control coupon" formControlName="coupon" type="text" placeholder="Enter coupon code" [(ngModel)]="postData.Voucher_Code"/>
+            </div>
+            <div class="error-messages">
+              <ng-container *ngFor="let error of error_messages.coupon">
+                <div class="error-message" *ngIf="loginForm.get('coupon').hasError(error.type) && 
+          (loginForm.get('coupon').dirty || loginForm.get('coupon').touched)">
+                  {{ error.message }}
+                </div>
+              </ng-container>
+            </div>
+<br>
+            <div class="center">
+                <p (click)="login()">Already have an account? </p>
+              <br>
+            </div>
+          <br>
+          <ion-button class="form-control btn btn-primary" share="round" style="--background:#20a7c2" (click)="Signup()">Submit</ion-button>
+          <!-- <ion-button class="form-control btn btn-primary" [disabled]="!loginForm.valid" share="round" style="--background:#20a7c2" (click)="Signup()">Submit</ion-button> -->
+
+        </form>
+      </div>
+    </div>
+
+
+  </ion-content>
+  

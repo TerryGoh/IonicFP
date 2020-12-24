@@ -1,0 +1,72 @@
+<ion-header>
+  <app-session-header></app-session-header>
+  <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)">
+    <ion-segment-button  class="{{isactivevideoorvoice}}" value="conferencing" >
+      <ion-label>Conferencing</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="{{isactiveassignment}}" value="assignment">
+      <ion-label>Assignment</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot='fixed' (ionRefresh)='UpdateData($event)'>
+    <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  <div *ngIf="segmentModel === 'conferencing'">
+    <ion-col>
+    <div style="text-align: center;">No Conference Call</div>
+    </ion-col>
+  </div>    
+    <div *ngIf="segmentModel === 'assignment'">
+      <div class="thirdcontent" >
+        
+        <div class="box" *ngIf="asgmtlist&&this.sessionstatus!==this.sessionstatusended">
+          <ion-label>
+            [{{asgmtlist.created_By_Username}}-{{asgmtlist.created_By_Level}}]  {{asgmtlist.asgmt_Title}} 
+        </ion-label>
+        <ion-icon style="position: absolute;right:1em;zoom:1.3" button src="assets/images/1001-cross.svg" (click)="PreviousPage()" ></ion-icon>
+        <br/>
+      </div>
+      <div class="boxSessionEnd" *ngIf="asgmtlist&&this.sessionstatus===this.sessionstatusended"> 
+        <ion-label>
+          [{{asgmtlist.created_By_Username}}-{{asgmtlist.created_By_Level}}]  {{asgmtlist.asgmt_Title}} 
+      </ion-label>
+      <ion-icon style="position: absolute;right:1em;zoom:1.3" button src="assets/images/1001-cross.svg" (click)="PreviousPage()" ></ion-icon>
+      <br/>
+    </div>
+
+      <div class="center">
+        <ion-card *ngIf="asgmtlist">
+          <b style="font-size: x-large;color:black">Question</b>
+          <ion-item>
+            <ion-img *ngIf="asgmtlist.asgmt_Data==null" ionImgViewer style="width:10em;height:10em;"  src="assets/images/noimage.png"></ion-img>
+            <img (click)="presentModalImage(imgdisplayinapp)" *ngIf="asgmtlist.asgmt_Data!=null" style="width:10em;height:10em;"  [src]="imgdisplayinapp">
+            <ion-button *ngIf="asgmtlist.created_By===this.studentid&&this.sessionstatus!==this.sessionstatusended" slot="end" style="font-size: larger;color:white;" (click)="EditDrawing()">Edit</ion-button>
+          </ion-item>
+            <ion-card-content style="font-size: large;color:black;padding: 0em;">
+           {{asgmtlist.asgmt_Value}}
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <b style="font-size: x-large;color:black">Discussion</b>
+        <div class="scrolling-wrapper">
+          <div *ngFor="let asgmtlist of asgmtdiscusslist"  class="card"><h2>
+            <ion-label style="font-size: medium;">{{asgmtlist.created_On | date:'medium'}}</ion-label><br/>
+            <img style="width:10em;height:10em" (click)="presentModalDiscussImage(asgmtlist.asgmtDiscuss_Data)" *ngIf="asgmtlist.asgmtDiscuss_Data!=null" [src]="this.display(asgmtlist.asgmtDiscuss_Data)"><br/>
+            <ion-label style="font-size: medium;" *ngIf="asgmtlist.created_By_Username!=null">Commented By: <b>{{asgmtlist.created_By_Username}} ({{asgmtlist.created_By_Level}})</b></ion-label><br/>
+            <ion-label style="font-size: medium;" *ngIf="asgmtlist.created_By_Username==null">Commented By: <b>{{tutornamefordisplay}}</b></ion-label><br/>
+          </h2>
+        </div>
+        </div>
+        </ion-card>
+        </div>
+  </div>
+  <!-- </div> -->
+</div>
+</ion-content>
+<ion-footer>
+   <ion-fab-button *ngIf="segmentModel === 'assignment'&&asgmtlist" (click)="StayonPage(asgmtlist.asgmt_Id)"  vertical="end" horizontal="end" style="position: absolute;bottom: 1em;right: 1em;"><img style="width:3em;height:3em;" src="assets/images/chat-1.svg"></ion-fab-button> 
+</ion-footer>
+

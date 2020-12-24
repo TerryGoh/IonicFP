@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Logout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ul class="breadcrumb" id="breadcrumbs">
+    <li style="display: inline;"><a href="/tabs/main"> Home </a><i class="ion-chevron-right"></i></li>
+    <li style="display: inline;" class="active"> Help </li>
+  </ul>    
+<ion-button style="color:white" (click)="Logout()">Logout</ion-button>
+
+<br>
+<br>
+<button class="accordion" (click)='ionViewDidLoad()'>
+  Reset Password
+</button>
+
+<div style="margin: 5px 90px" class="panel">
+  <br>
+  <form class="container" [formGroup]="loginForm1">
+    <div class="form-group"> 
+            <ion-label position="stacked">New Password <span style="color: red">*</span></ion-label>
+            <div class="form">
+            <input autocomplete="off" name="password" class="form-control" formControlName="password" [type]="showPassword4 ? 'text': 'password'" >
+            <ion-icon slot="end" [name]="passwordToggleIcon4" (click)="togglePassword4()"></ion-icon>
+            </div>
+    </div>
+    <div class="error-messages">
+      <ng-container *ngFor="let error of error_messages.password">
+        <div class="error-message" *ngIf="loginForm1.get('password').hasError(error.type) && (loginForm1.get('password').dirty || loginForm1.get('password').touched)">
+          {{ error.message }}
+        </div>
+      </ng-container>
+    </div>
+          
+    <br>
+    <div class="form-group">
+            <ion-label position="stacked">Confirm New Password <span style="color: red">*</span></ion-label>
+            <div class="form">
+            <input autocomplete="off" name="confirmpassword" class="form-control" formControlName="confirmpassword" [type]="showPassword5 ? 'text': 'password'" />
+            <ion-icon slot="end" [name]="passwordToggleIcon5" (click)="togglePassword5()"></ion-icon>
+          </div> 
+          </div>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of error_messages.confirmpassword">
+              <div class="error-message" *ngIf="loginForm1.get('confirmpassword').hasError(error.type) && (loginForm1.get('confirmpassword').dirty || loginForm1.get('confirmpassword').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+            <div class="error-message" *ngIf="!loginForm1.get('confirmpassword').errors && loginForm1.hasError('passwordNotMatch') && (loginForm1.get('confirmpassword').dirty || loginForm1.get('confirmpassword').touched)">
+              Password and Confirm Password fields should match
+            </div>
+          </div>
+         <br>
+         <div class="ionbutton">
+          <ion-button class="form-control btn btn-primary" [disabled]="!loginForm1.valid" share="round" (click)="presentAlert()">Confirm</ion-button></div>
+<br><br><br><br><br>
+</form>
+   </div>
+</ion-content>

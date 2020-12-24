@@ -1,0 +1,64 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-email-composer": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-advanced-http": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-camera": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "com-badrit-base64": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-sms-plugin": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-datepicker": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "slp.app.stud"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "slp.app.stud"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "slp.app.stud"
+    }
+  }
+}

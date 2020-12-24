@@ -1,0 +1,50 @@
+<!---No Read-->
+<ion-header>
+  <app-session-header></app-session-header>
+  <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)">
+    <ion-segment-button class="{{isactivevideoorvoice}}" value="conferencing" >
+      <ion-label>Conferencing</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="{{isactiveassignment}}" value="assignment">
+      <ion-label>Assignment</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+<ion-content>
+  <div *ngIf="segmentModel === 'conferencing'">
+    <ion-col>
+    <div style="text-align: center;">No Conference Call</div>
+    </ion-col>
+  </div>    
+  <div *ngIf="segmentModel === 'assignment'">
+    <div class="secondcontent">
+      <br/>
+    <ion-col style="font-size: large;color:#1c91a8;padding:1em;">Upload Assignment</ion-col>
+    <form [formGroup]="createassignmentForm">
+      <ion-item>
+        <ion-label position="floating" style="color:#1c91a8;">Title<b style="color:red;">*</b></ion-label>
+        <ion-input formControlName="assignmenttitle" [(ngModel)]="assignmenttitle"></ion-input>
+      </ion-item>
+      <ion-label position="floating" style="color:#1c91a8;margin-left: 1em;">Question<b style="color:red;">*</b></ion-label>
+      <ion-item lines="none" *ngIf="imagevalid">
+        <div style=" width:auto;margin:0 auto;display:block;float:none;max-width:100%; ">
+          <img [src]="imgdisplayinapp" > 
+    </div>
+    </ion-item>
+      <ion-item>
+          <ion-textarea formControlName="assignmenttext" *ngIf="showtextarea" [(ngModel)]="assignmenttext"></ion-textarea>
+        </ion-item>
+    <ion-col>
+      <div class="content">
+        <span><ion-icon button (click)="selecttext($event)" src="assets/images/045-text.svg"></ion-icon></span>
+        <span><ion-icon button (click)="selectImageGallery()" src="assets/images/attachment.svg"></ion-icon></span>
+        <span><ion-icon button (click)="selectImageCamera()" src="assets/images/005-camera.svg"></ion-icon></span>
+      </div>
+    </ion-col>
+    </form>
+    <ion-col>
+      <ion-button expand='full' (click)="UploadAssignment()" style="color:#ffffff;">Submit</ion-button>
+    </ion-col>
+    </div>
+    </div>
+  </ion-content>

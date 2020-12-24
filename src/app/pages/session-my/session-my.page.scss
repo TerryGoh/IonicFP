@@ -1,0 +1,46 @@
+.accordion-list {
+    padding: 0 1% 0 1%;
+    margin-bottom: 0.5em;
+    .section,
+    .section-active {
+        --min-height: 6em;
+    }
+}
+  .section{
+    --ion-item-background:#d9f6ff;
+  }
+  .section-active{
+   --ion-item-background:#d9f6ff;
+  }
+  .buttondiscusspendingacceptsession{
+    font-size: large;
+    color:#e5741f;
+    background-color: transparent;
+    position: absolute;
+    top:0;
+  }
+  .defaultgreenfont{
+    color:#1c91a8;
+  }
+  //End Session
+  .accordion-listEnd {
+    padding: 0 1% 0 1%;
+    margin-bottom: 0.5em;
+    .sectionEnd,
+    .sectionEnd-active {
+      --min-height: 6em;
+    }
+}
+  .sectionEnd{
+    --ion-item-background:#b2b2b2;
+  }
+  .sectionEnd-active{
+   --ion-item-background:#b2b2b2;
+  }
+  .buttonEndsession{
+    font-size: large;
+    color:#808080;
+    background-color: transparent;
+    top:0;
+  }
+  

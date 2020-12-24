@@ -1,0 +1,26 @@
+.accordion-list {
+    padding: 0 1% 0 1%;
+    margin-bottom: 0.5em;
+    .section,
+    .section-active {
+        --min-height: 6em;
+    }
+}
+  .section{
+    --ion-item-background:#d9f6ff;
+  }
+  .section-active{
+   --ion-item-background:#d9f6ff;
+  }
+  .buttonjoinsession{
+    font-size: large;
+    color:#e5741f;
+    background-color: transparent;
+    position: absolute;
+    top:0;
+  }
+  .defaultgreenfont{
+    color:#1c91a8;
+  }
+ 
+  

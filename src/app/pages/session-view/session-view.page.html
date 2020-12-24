@@ -1,0 +1,43 @@
+<ion-header>
+  <app-session-header></app-session-header>
+  <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)">
+    <ion-segment-button class="{{isactivevideoorvoice}}" value="conferencing" >
+      <ion-label>Conferencing</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="{{isactiveassignment}}" value="assignment">
+      <ion-label>Assignment</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="segmentModel === 'conferencing'">
+    <ion-col>
+    <div style="text-align: center;">No Conference Call</div>
+    </ion-col>
+  </div>    
+  <div *ngIf="segmentModel === 'assignment'">
+    <div class="thirdcontent">
+      <ion-list *ngFor="let assignment of asgmtlist"  [routerLink]="['/tabs/session-view/', 'session-assignment-view',assignment.session_Id,assignment.asgmt_Id]">
+        <div class="box" *ngIf="this.sessionstatus!==this.sessionstatusended">
+            <ion-label>
+                [{{assignment.created_By_Username}}-{{assignment.created_By_Level}}]  {{assignment.asgmt_Title}}
+            </ion-label>
+            <ion-icon style="position: absolute;right:1em;" button src="assets/images/details-assignment.svg"></ion-icon>
+            <br/>
+          </div>
+          <div class="boxSessionEnd" *ngIf="this.sessionstatus===this.sessionstatusended">
+            <ion-label>
+                [{{assignment.created_By_Username}}-{{assignment.created_By_Level}}]  {{assignment.asgmt_Title}} 
+            </ion-label>
+            <ion-icon style="position: absolute;right:1em;" button src="assets/images/details-assignment.svg"></ion-icon>
+            <br/>
+          </div>
+    </ion-list>
+  </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <br/>
+  <ion-fab-button *ngIf="segmentModel === 'assignment' && asgmtlist &&this.sessionstatus!==this.sessionstatusended" (click)="StayonPage()" vertical="end" horizontal="end" slot="fixed" style="position: absolute;bottom: 1em;right: 1em;"><img src="assets/images/126-plus.svg"></ion-fab-button>
+</ion-footer>

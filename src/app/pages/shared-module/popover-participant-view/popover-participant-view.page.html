@@ -1,0 +1,25 @@
+<!---check-->
+<ion-header>
+  <h2 class="title" style="font-size: large;padding: 2%;"><b>Participants <b *ngIf="this.sessionstatusended!==this.sessionstatus">({{numofparticipants}})</b> </b><ion-icon style="float: right;" src="assets/images/pop-up-cross.svg" (click)="closePopover()"></ion-icon></h2>
+</ion-header>
+<ion-content >
+  <div class="container" *ngIf="this.sessionstatusended!==this.sessionstatus">
+<div *ngFor="let participant of textdisplayparticipant">
+<div class="popovercss" *ngIf="participant.participant_Id==='TUTOR'">
+  [SV] <b>{{participant.username}}</b>   <!--Tutor(SESSION_STATUS_ACCEPTED)-->
+</div>
+</div>
+<div *ngFor="let participant of textdisplayparticipant">
+<div class="popovercss" *ngIf="participant.is_Initiator==='Y'">
+[IS] ({{participant.levelInfo_DisplayName}}) <b>{{participant.username}}</b>   <!--Session Initiator-->
+</div>
+</div>
+<div *ngFor="let participant of textdisplayparticipant">
+<div  *ngIf="participant.status==this.participantstatusaccepted&&participant.sessionstatus!=this.sessionstatusaccepted&&participant.is_Initiator!=='Y'">
+  <div class="popovercss" >({{participant.levelInfo_DisplayName}}) <b>{{participant.username}}</b><button *ngIf="this.studentid==this.initiatorid&&this.sessionstatus!=this.sessionstatusaccepted" (click) = "RemoveParticipant(participant.participant_Id)"  class="popoverremovebutton">Remove</button>   
+  </div>
+</div>
+</div>
+<div><button class="popoverinvitebutton" *ngIf="sessionstatus!=this.sessionstatusaccepted&&this.studentid==this.initiatorid" (click)="invitefriend()"><b>Invite Friend</b></button></div>
+</div>
+<div *ngIf="this.sessionstatusended===this.sessionstatus" style="font-size: larger;text-align: center;"><b>Session has ended.</b></div>

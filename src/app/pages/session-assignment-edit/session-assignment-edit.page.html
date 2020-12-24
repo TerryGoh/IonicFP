@@ -1,0 +1,58 @@
+<!--No Read-->
+<ion-header >
+  <app-session-header>
+    <meta name='viewport' content='user-scalable=no'>
+  </app-session-header>
+  <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)">
+    <ion-segment-button  class="{{isactivevideoorvoice}}" value="conferencing" >
+      <ion-label>Conferencing</ion-label>
+    </ion-segment-button>
+    <ion-segment-button class="{{isactiveassignment}}" value="assignment">
+      <ion-label>Assignment</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content [forceOverscroll]="false">
+
+  <div *ngIf="segmentModel === 'conferencing'">
+    <ion-col>
+    <div style="text-align: center;">No Conference Call</div>
+    </ion-col>
+  </div>    
+  <div *ngIf="segmentModel === 'assignment'">
+      <div class="thirdcontent" *ngIf="asgmtlist">
+        <div class="box" >
+          <ion-label>
+            [{{asgmtlist.created_By_Username}}-{{asgmtlist.created_By_Level}}]  {{asgmtlist.asgmt_Title}}  <!---Assignment Owner,level & assgmttitle-->
+        </ion-label>
+          <ion-icon style="position: absolute;right:1em;zoom:1.3" button src="assets/images/1001-cross.svg" (click)="PreviousPage()"></ion-icon>
+         </div> 
+         <div id="qns" class="card"><h3  style="font-size: medium;"><b>Question: {{asgmtlist.asgmt_Value}}</b></h3></div>
+        <canvas id="canvas" #DrawingCanvas (touchstart)="handleStart($event)" (touchmove)="handleMove($event)" (touchend)="handleStop()"></canvas>
+    </div>
+    </div>
+  
+
+    </ion-content>
+<ion-footer>
+  <div id="wrappalette" >
+    <ion-row *ngIf="drawpencil||drawpen" > 
+      <ion-col *ngFor="let color of colorsPenPencil" [style.background]="color" class="color-block" tappable
+        (click)="selectColor(color)"></ion-col>
+    </ion-row>
+    <ion-row *ngIf="drawhighlighter">
+      <ion-col *ngFor="let color of colorsHighlighter" [style.background]="color" class="color-block" tappable
+      (click)="selectColor(color)"></ion-col>
+    </ion-row>
+  </div>
+  <div class="content" *ngIf="segmentModel === 'assignment'">
+    <span><ion-icon name="color-palette" *ngIf="drawpencil||drawpen||drawhighlighter"></ion-icon></span>
+   <span><ion-icon class='iconclick' src="assets/images/009-pencil.svg" (click)="DrawByPencil()" ></ion-icon></span>
+   <span><ion-icon class='iconclick' src="assets/images/030-pen.svg" (click)="DrawByPen()"></ion-icon></span>
+   <span><ion-icon class='iconclick' src="assets/images/018-highlighter.svg" (click)="DrawByHighlighter()"></ion-icon></span>
+   <span *ngIf="canUndo"><ion-icon src="assets/images/undo.svg" (click)="undo()"></ion-icon></span>
+   <span *ngIf="canRedo"><ion-icon src="assets/images/redo.svg" (click)="redo()"></ion-icon></span>
+   <span><ion-icon src="assets/images/save.svg"  (click)="exportCanvasImage()"></ion-icon></span>
+ </div>
+</ion-footer>

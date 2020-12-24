@@ -1,0 +1,33 @@
+.container{
+  padding: 0 4% 0 4%;
+}
+  ion-toolbar{
+    --min-height:0px!important;
+  }
+  .popoverinvitebutton{
+    border:solid 0.1em black;
+    color:white;
+    background-color:#1c91a8;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0.5em;
+  }
+.popoveraddlabel{
+  color:black;
+  float: right;
+  padding:0.1em;
+}
+.popovercss{
+  border:solid #000000;
+  background-color: white;
+  margin-bottom:0.5em;
+  padding:0.3em;
+}
+.popoveraddbutton{
+  border:solid 0.1em black;
+  color:white;
+  background-color:#1c91a8;
+  float: right;
+  padding:0.1em;
+}

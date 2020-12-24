@@ -1,0 +1,33 @@
+  <ion-content padding='true' class="vertical-center">
+    <br><br><br><br><br><br><br><br>
+  <div class="center">
+  <!-- <img src="assets/images/logo.jpg" class="smallLogo"/> -->
+  <h1>Student Learning Platform</h1>
+  </div>
+  <br>
+  <form>
+  <ion-list>
+  <ion-item>
+  <ion-label position="stacked">Username</ion-label>
+  <ion-input autocomplete="off" type="text" name="username" [(ngModel)]="postData.Username"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+  <ion-label position="stacked">Password</ion-label>
+  <ion-input autocomplete="off" [type]="showPassword3 ? 'text': 'password'" name="password" [(ngModel)]="postData.Password"></ion-input>
+  <ion-icon slot="end" [name]="passwordToggleIcon3" (click)="togglePassword3()"></ion-icon>
+</ion-item>
+<div class="forgot">
+  <p (click)="OpenEmailComposer()">Forgot?</p></div>
+<br>
+<br>
+  <div class="button" div class="center">
+    <ion-button class="ionbutton" style="color:white" (click)="Login()" routerDirection="root">Sign In</ion-button>
+  </div>
+  <br>
+  <br>
+  <p class="center1" (click)="signin()" style="margin:auto; text-align:center; display:block;">Sign Up An Account?</p>
+  </ion-list>
+  
+  </form>
+  </ion-content>

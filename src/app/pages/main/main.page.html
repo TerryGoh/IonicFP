@@ -1,0 +1,35 @@
+<app-main-header></app-main-header>
+<ion-content>
+  <div class="maincontent">
+  <ion-grid class="center">
+    <ion-row>
+      <ion-col>
+        <div>
+          <button (click)="InitiateSession()"><img src="assets/images/enrollment.png" alt="Initiate Session"></button>
+          <div style="font-size: large;">Request Tuition</div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <button (click)="JoinSession()"><img src="assets/images/html.png" alt="Join Session"></button>
+          <div style="font-size: large;">Join Session</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div>
+          <button (click)="MySession()"><img src="assets/images/assignment.png" alt="My Session"><br/></button><span></span>
+          <div style="font-size: large;">My Sessions</div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <button (click)="Help()"><img src="assets/images/question.png" alt="Help"><br/></button>
+          <div style="font-size: large;">Help</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

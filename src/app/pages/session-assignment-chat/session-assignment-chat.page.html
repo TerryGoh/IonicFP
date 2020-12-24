@@ -1,0 +1,60 @@
+<ion-header *ngIf="this.sessionstatus!==this.sessionstatusended" style="padding:3%;background-color:#274c9c;">
+  <ion-title style="text-align: center;color:white;display:inline-flexbox;" ><b>Instant Messaging</b><img (click)="DismissModal()" style="width: 1.2em;position:absolute;right:0;" src="assets/images/criss-cross_grayblue.png"></ion-title>
+  </ion-header>
+  <!--Read-->
+  <ion-header *ngIf="this.sessionstatus===this.sessionstatusended" style="padding:3%;background-color:#b2b2b2;">
+    <ion-title style="text-align: center;color:#808080;display:inline-flexbox;" ><b>Instant Messaging</b><img (click)="DismissModal()" style="width: 1.2em;position:absolute;right:0;" src="assets/images/criss-cross_grayblue.png"></ion-title>
+    </ion-header>
+<ion-content #content overflow-scroll="true">
+<div class="thirdcontent" *ngFor="let chat of chatIRecived">
+<ion-row >
+  <ion-col *ngIf="chat.sender_Id!=this.studentid" size="9"  class="message other-message">
+    <b>{{chat.sender_Username}} to {{chat.recipient_Username}}:</b><br>
+    <span>{{chat.chat_Value}}</span>
+    <div class="time" text-right><br>
+      <ion-label> {{chat.created_On| date:'medium'}}</ion-label>
+    </div>
+  </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col offset="3" *ngIf="chat.sender_Id==this.studentid"  size="9" class="message my-message">
+      <b>{{chat.sender_Username}} to {{chat.recipient_Username}}:</b><br>
+      <span>{{chat.chat_Value}}</span>
+      <div class="time" text-right><br>
+        <ion-label> {{chat.created_On| date:'medium'}}</ion-label>
+        <!-- <ion-datetime value="{{chat.created_On}}" displayFormat="D MMM YYYY, H:mm" display-timezone="utc"></ion-datetime>    -->
+      </div>
+    </ion-col>
+    </ion-row>
+    
+    
+</div>
+</ion-content>
+<!--No Read-->
+<ion-footer>
+<ion-toolbar >
+  <form [formGroup]="createchatForm" *ngIf="this.sessionstatus!==this.sessionstatusended">
+<ion-row>  
+  <ion-col size="2" class="ion-align-self-center">
+  <ion-text>To:</ion-text>
+  </ion-col>
+      <ion-col offset="-1" size="5">
+      <ion-select [(ngModel)]="recipientname"  formControlName="recipientname" style="background-color: #808080;color:black;" #mySelect  (ionChange)="selectChanged(mySelect.value)">
+        <ion-select-option><label>Everyone</label></ion-select-option>
+        <div *ngFor="let recipient of listRecipient">
+        <ion-select-option value="{{recipient.user_Id}}" *ngIf="recipient.user_Id!=this.studentid&&this.noofparticipant!=1"><label>{{ recipient.user_Username }}</label></ion-select-option>
+      </div>
+      </ion-select>
+    </ion-col>
+  <ion-col size="10">
+  <textarea formControlName="chattext" autosize maxRows="4"  [(ngModel)]="chattext" class="message-input"></textarea>
+  </ion-col>
+  <ion-col size="2" class="ion-align-self-center">
+    <img style="width:2em;" src="assets/images/user-interface.png" (click)="SendMessage()"><br/>
+  </ion-col>
+</ion-row>
+</form>
+</ion-toolbar>
+</ion-footer>
+
+

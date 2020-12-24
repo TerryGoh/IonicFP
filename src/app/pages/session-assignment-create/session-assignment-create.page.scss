@@ -1,0 +1,21 @@
+ion-item {
+    border:none;
+  }
+  .content {
+    display: flex;
+    max-width: 400em;
+    margin: 0 auto;
+    background:transparent;
+    padding-left:2em;
+  }
+  span {
+    zoom:2;
+    padding: 0.1em;
+  }
+  ion-icon {
+    background-color:transparent;
+  }
+  ion-icon:hover{
+    background-color: #b9b9b9;
+    border:#b9b9b9 solid 0.1em;
+  }

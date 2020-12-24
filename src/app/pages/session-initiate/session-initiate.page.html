@@ -1,0 +1,37 @@
+<app-main-header></app-main-header>
+<ion-content>
+  <ion-refresher slot='fixed' (ionRefresh)='UpdateData($event)'>
+    <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  <div class="secondcontent">
+  <ul class="breadcrumb" id="breadcrumbs">
+    <li style="display: inline;"><a href="/tabs/main"> Home </a><i class="ion-chevron-right"></i></li>
+    <li style="display: inline;" class="active"> Request Tuition </li>
+  </ul>    
+    <form [formGroup]="initiatesessionForm">
+    <ion-item>
+    <ion-label position="floating" style="color:#1c91a8;">Title<b style="color:red;">*</b></ion-label>
+    <ion-input formControlName="assignmenttitle" [(ngModel)]="assignmenttitle"></ion-input>
+  </ion-item>
+  <ion-label position="floating" style="color:#1c91a8;margin-left: 1em;">Question<b style="color:red;">*</b></ion-label>
+  <ion-item lines="none" *ngIf="imagevalid">
+    <div style=" width:auto;margin:0 auto;display:block;float:none;max-width:100%; ">
+  <img [src]="imgdisplayinapp" > 
+</div>
+</ion-item>
+  <ion-item>
+      <ion-textarea formControlName="assignmenttext" *ngIf="showtextarea" [(ngModel)]="assignmenttext"></ion-textarea>
+    </ion-item>
+<ion-col>
+  <div class="content">
+    <span><ion-icon button (click)="selecttext($event)" src="assets/images/045-text.svg"></ion-icon></span>
+    <span><ion-icon button (click)="selectImageGallery()" src="assets/images/attachment.svg"></ion-icon></span>
+    <span><ion-icon button (click)="selectImageCamera()" src="assets/images/005-camera.svg"></ion-icon></span>
+  </div>
+</ion-col>
+</form>
+<ion-col>
+  <ion-button expand='full' (click)="UploadAssignment()" style="color:#ffffff;">Submit</ion-button>
+</ion-col>
+</div>
+</ion-content>

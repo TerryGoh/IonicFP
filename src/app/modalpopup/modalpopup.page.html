@@ -1,0 +1,29 @@
+  <ion-content fullscreen="true" slot="fixed" padding class="background">
+    <ion-item >
+      <ion-label >PROFILE</ion-label>
+      <ion-button size="small" (click)="CloseModal()" slot="end" style="--background:#20a7c2">close</ion-button>
+    </ion-item>
+    
+    <div class="card">
+      <div class="header">
+        <div class="avatar">
+          <img src="/assets/images/person.png" >
+        </div> 
+      </div>
+    </div>
+  
+
+    <div class="card-body">
+      <div class="user-meta ion-text-center">
+        <h3 class="playername">{{ username }}</h3>
+        <!-- <h5 class="country">Switzerland</h5> -->
+        <!-- <h6 class="ranking">Current ranking: <ion-chip>
+          <ion-label>2</ion-label>
+          </ion-chip>
+        </h6> -->
+        <br>
+      </div>
+      <ion-button expand="full" color="secondary" (click)="profile()">{{ schoolInfo_Name }}</ion-button>
+      <ion-button expand="full" color="secondary">{{ levelInfo_DisplayName }}</ion-button>
+    </div>
+  </ion-content>

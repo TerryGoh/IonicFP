@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Student Learning Platform</ion-title>
+    </ion-toolbar>
+</ion-header>
+<link href="https://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+
+<ion-content padding='true'>
+    <div class="container">
+
+        <div style="margin: 30px">
+            <p class="p">Select Authentication Method</p>
+            <br>
+            <form class="container" [formGroup]="loginForm">
+
+                    <div class="form-group">
+                      <ion-label position="stacked">Phone <span style="color: red">*</span></ion-label>
+                      <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" name="phoneNo" />
+                    </div>
+                    <div class="error-messages">
+                      <ng-container *ngFor="let error of error_messages.phoneNo">
+                        <div class="error-message" *ngIf="loginForm.get('phoneNo').hasError(error.type) && (loginForm.get('phoneNo').dirty || loginForm.get('phoneNo').touched)">
+                          {{ error.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <ion-label position="stacked">Code Input <span style="color: red">*</span></ion-label>
+                        <input id="messageTxt" placeholder="Enter message" value="" type="text" name="code"/>
+                      </div>
+                      <div class="error-messages">
+                        <ng-container *ngFor="let error of error_messages.code">
+                          <div class="error-message" *ngIf="loginForm.get('code').hasError(error.type) && (loginForm.get('code').dirty || loginForm.get('code').touched)">
+                            {{ error.message }}
+                          </div>
+                        </ng-container>
+                      </div>
+
+                      <br>
+
+                      <ion-button class="form-control btn btn-primary" share="round" style="--background:#20a7c2" (click)="sendSMS()">Send SMS</ion-button>
+            </form>
+        </div>
+    </div>
+
+
+</ion-content>

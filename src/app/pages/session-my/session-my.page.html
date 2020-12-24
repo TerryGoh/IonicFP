@@ -1,0 +1,91 @@
+<app-main-header></app-main-header>
+<ion-content>
+  <ion-refresher slot='fixed' (ionRefresh)='UpdateData($event)'>
+  <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ul class="breadcrumb" id="breadcrumbs">
+    <li style="display: inline;"><a href="/tabs/main"> Home </a><i class="ion-chevron-right"></i></li>
+    <li style="display: inline;" class="active"> My Sessions </li>
+  </ul>    
+  <div class="fourthcontent">
+    <div *ngIf="boolHaveSession" style="font-size: larger;"><b>{{NoSessionText}}</b></div>
+    <!--Session Not Yet Accepted By Tutor-->
+    <ion-list  *ngFor="let item of textdisplay; let i = index" class="accordion-list" lines="none" detail="false" >
+      <ion-grid tappable *ngIf="item.session_Status==this.sessionstatuspending" style="background-color: #d9f6ff;" [ngClass]="{'section-active': item.open, 'section': !item.open}">
+        <ion-row>
+          <ion-col size="9">
+              <b class="defaultgreenfont" style="font-size: large;">{{item.session_Title}}<br/></b>
+              <ion-label style="color:#e5741f;">Awaiting Tutor to accept<br/></ion-label>
+              <ion-label *ngIf="item.session_Status==this.sessionstatuspending" class="defaultgreenfont">Participant({{item.num_Of_Participants}}): [IS]{{item.initiator_Name}}<br/></ion-label> 
+            </ion-col> 
+            <ion-col size="1">
+        <button *ngIf="item.participant_Status==this.participantstausinviting" class="buttondiscusspendingacceptsession" (click)="CallAPIToAcceptInvitation(item.session_Id,item.participant_Id,item.initiator_Id)"><b>Accept</b></button>
+        <button *ngIf="item.participant_Status==this.participantstatusaccepted" class="buttondiscusspendingacceptsession" (click)="StayonPage()" [routerLink]="['/tabs/session-view/'+'session-view/', item.session_Id]" routerDirection="forward"><b>Discuss</b></button><!--participantstatusaccepted-->
+        <button *ngIf="item.participant_Status==this.participantstausrequest"class="buttondiscusspendingacceptsession" style="font-style: italic;">Pending</button> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <br/>
+        <div style="color: black; position: absolute;left: 50%;" (click)="toggleSection(i)" [ngClass] ="{'section-active' : item.open, 'section': !item.open}">
+          <ion-icon src="assets/images/063-down-arrow-5.svg" (click)="SanitizeImage(item.session_Question_Data)" *ngIf="!item.open" ></ion-icon>
+          <ion-icon src="assets/images/006-up-arrow-6.svg" *ngIf="item.open" style="color: black;"></ion-icon>
+     </div> 
+      </ion-row>
+    </ion-grid>
+    <!--Session Accepted By Tutor--><!--sessionstatusaccepted-->
+      <ion-grid tappable *ngIf="item.session_Status==this.sessionstatusaccepted" style="background-color: #d9f6ff;" [ngClass]="{'section-active': item.open, 'section': !item.open}">
+        <ion-row>
+          <ion-col size="9">
+              <b class="defaultgreenfont" style="font-size: large;">{{item.session_Title}}<br/></b>
+             
+              <ion-label class="defaultgreenfont">{{item.subject_DisplayName}}({{item.level_DisplayName}})<br/></ion-label>
+              <ion-label class="defaultgreenfont">Participant({{item.num_Of_Participants}}):[SV]{{item.tutor_Name}}; [IS]{{item.initiator_Name}}<br/></ion-label> 
+            </ion-col> 
+            <ion-col size="1">
+        <button *ngIf="item.participant_Status==this.participantstausinviting" class="buttondiscusspendingacceptsession" (click)="CallAPIToAcceptInvitation(item.session_Id,item.participant_Id,item.initiator_Id)" ><b>Accept</b></button>
+        <button *ngIf="item.participant_Status==this.participantstatusaccepted" class="buttondiscusspendingacceptsession" (click)="StayonPage()" [routerLink]="['/tabs/session-view/'+'session-view/', item.session_Id]" routerDirection="forward"><b>Discuss</b></button><!--participantstatusaccepted-->
+        <button *ngIf="item.participant_Status==this.participantstausrequest"class="buttondiscusspendingacceptsession" style="font-style: italic;">Pending</button> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <br/>
+        <div style="color: black; position: absolute;left: 50%;" (click)="toggleSection(i)" [ngClass] ="{'section-active' : item.open, 'section': !item.open}">
+          <ion-icon src="assets/images/063-down-arrow-5.svg" (click)="SanitizeImage(item.session_Question_Data)" *ngIf="!item.open" ></ion-icon>
+          <ion-icon src="assets/images/006-up-arrow-6.svg" *ngIf="item.open" style="color: black;"></ion-icon>
+     </div> 
+      </ion-row>
+    </ion-grid>
+    <ion-grid *ngIf="item.session_Status==this.sessionstatusended" tappable style="background-color: #b2b2b2;" [ngClass]="{'sectionEnd-active': item.open, 'sectionEnd': !item.open}">
+      <ion-row>
+        <ion-col size="10" style="color: #808080;" >       
+         <b style="font-size: large;">{{item.session_Title}}<br/></b>
+             <ion-label *ngIf="item.subject_DisplayName!=null&&item.subject_DisplayName!=null">{{item.subject_DisplayName}}({{item.level_DisplayName}})<br/></ion-label>
+             <ion-label>Participant({{item.num_Of_Participants}}):<label *ngIf="item.tutor_Name!=null">[SV]{{item.tutor_Name}};</label> [IS]{{item.initiator_Name}}<br/></ion-label> 
+          </ion-col>
+        <ion-col size="2">
+       <button class="buttonEndsession" (click)="StayonPage()" [routerLink]="['/tabs/session-view/'+'session-view/', item.session_Id]" routerDirection="forward"><b>Read</b></button><!--sessionstatusended; Session end time==participant left time-->
+       </ion-col>
+       </ion-row>
+       <ion-row>
+        <br/>
+         <div style="color: black; position: absolute;left: 50%;" (click)="toggleSection(i)"  routerDirection="forward">
+           <ion-icon src="assets/images/063-down-arrow-5.svg" (click)="SanitizeImage(item.session_Question_Data)" *ngIf="!item.open" ></ion-icon>
+           <ion-icon src="assets/images/006-up-arrow-6.svg" *ngIf="item.open" style="color: black;"></ion-icon>
+      </div> 
+      </ion-row>
+     </ion-grid>
+      <div *ngIf="item.open&&item.session_Status!=this.sessionstatusended">
+            <div style="border:dashed #1c91a8;">
+              <p *ngIf="item.session_Question_Data!=null"><img [src]="imgdisplayinapp" alt="Image" onerror="this.style.display='none'"/></p>
+           <label>{{item.session_Question_Text}}</label> <!--Question Text-->
+          </div>
+      </div>
+      <div *ngIf="item.open&&item.session_Status==this.sessionstatusended">
+        <div style="border:dashed #1c91a8;">
+          <p *ngIf="item.session_Question_Data!=null"><img [src]="imgdisplayinapp" alt="Image" onerror="this.style.display='none'"/></p> 
+          <label>{{item.session_Question_Text}}</label> <!--Question Text-->
+      </div>
+    </div>
+  </ion-list>
+</div>
+</ion-content>

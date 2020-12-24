@@ -1,0 +1,13 @@
+.tab-selected {
+    background-color: #146778;
+    color: #fdf9f2;
+}
+
+ion-tab-button:not(.tab-selected) {
+  background-color: #33404d;
+  color:#a5988f;
+}
+
+ion-tab-bar {
+    --border: none;
+}
