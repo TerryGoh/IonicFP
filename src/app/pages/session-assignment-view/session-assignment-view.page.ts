@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, NgZone } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AssignmentsService } from '../../services/assignments.service';
 import { ModalController, Platform } from '@ionic/angular';
@@ -13,12 +13,14 @@ import { SessionMyPage } from '../session-my/session-my.page';
 import { Observable } from 'rxjs/internal/Observable';
 import { HTTP } from '@ionic-native/http/ngx';
 import { TestBed } from '@angular/core/testing';
+import { run } from "../../../assets/js/examples/face_tracking__track_one_face.js";
+import { closeCamera } from '../../../assets/js/ui/ui__input__camera.js'
 @Component({
   selector: 'app-session-assignment-view',
   templateUrl: './session-assignment-view.page.html',
   styleUrls: ['./session-assignment-view.page.scss'],
 })
-export class SessionAssignmentViewPage implements OnInit {
+export class SessionAssignmentViewPage implements OnInit, AfterViewInit {
   textdisplay: any;
   assignlist: any;
   ChangeDetectorRef: any;
@@ -40,6 +42,9 @@ export class SessionAssignmentViewPage implements OnInit {
   this.isactiveassignment="activesegment";
   }
 
+  ngAfterViewInit() {
+    
+  }
 
   ionViewWillEnter()
   {
@@ -48,12 +53,19 @@ export class SessionAssignmentViewPage implements OnInit {
     this.getAssignmentList();
     this.tutornamefordisplay=this.assignmentsService.getselectedtutorname()
 
+    // Starts brfv5 face tracking
+    console.log("brfv5 starting...")
+    run();
   }
   ionViewDidEnter(){
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.router.navigateByUrl('tabs/session-view/session-view/'+this.sessionid)
     });
+  }
+  ionViewWillLeave() {
+    console.log("Leaving view, closing camera")
+    closeCamera();
   }
 
 /*Get AssignmentList*/
