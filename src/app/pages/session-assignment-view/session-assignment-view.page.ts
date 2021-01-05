@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AssignmentsService } from '../../services/assignments.service';
 import { ModalController, Platform } from '@ionic/angular';
@@ -20,7 +20,7 @@ import { closeCamera } from '../../../assets/js/ui/ui__input__camera.js'
   templateUrl: './session-assignment-view.page.html',
   styleUrls: ['./session-assignment-view.page.scss'],
 })
-export class SessionAssignmentViewPage implements OnInit, AfterViewInit {
+export class SessionAssignmentViewPage implements OnInit {
   textdisplay: any;
   assignlist: any;
   ChangeDetectorRef: any;
@@ -42,10 +42,6 @@ export class SessionAssignmentViewPage implements OnInit, AfterViewInit {
   this.isactiveassignment="activesegment";
   }
 
-  ngAfterViewInit() {
-    
-  }
-
   ionViewWillEnter()
   {
     this.token=this.globalService.getselectedtoken()
@@ -54,8 +50,7 @@ export class SessionAssignmentViewPage implements OnInit, AfterViewInit {
     this.tutornamefordisplay=this.assignmentsService.getselectedtutorname()
 
     // Starts brfv5 face tracking
-    console.log("brfv5 starting...")
-    run();
+    this.brf_run();
   }
   ionViewDidEnter(){
 
@@ -64,8 +59,7 @@ export class SessionAssignmentViewPage implements OnInit, AfterViewInit {
     });
   }
   ionViewWillLeave() {
-    console.log("Leaving view, closing camera")
-    closeCamera();
+    this.brf_stop();
   }
 
 /*Get AssignmentList*/
@@ -179,10 +173,12 @@ async UpdateData(event)
    {
    this.isactiveassignment="inactivesegment";
    this.isactivevideoorvoice="activesegment";
+   this.brf_stop();
    }
    else if (this.segmentModel=="assignment"){
      this.isactiveassignment="activesegment";
      this.isactivevideoorvoice="inactivesegment";
+    this.brf_run();
    }
  }
 /*Chat Pop up*/
@@ -254,6 +250,16 @@ StayonPage(asgmtid)
       }
     });
     return await modal.present();
+  }
+  //Opens camera and begins brfv5 face tracking
+  brf_run() {
+    run();
+    console.log("brfv5 started")
+  }
+  // Stops camera and brfv5
+  brf_stop() {
+    closeCamera();
+    console.log("camera closed")
   }
   
 }
