@@ -32,6 +32,7 @@ const faceExtended = new BRFv5FaceExtended()
 
 let lmData = "";
 let count = 0;
+let emoCount = 0;
 
 export const configureExample = (brfv5Config) => {
 
@@ -82,7 +83,7 @@ export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        var proxyUrl = "https://cors-anywhere.herokuapp.com/"
+        var proxyUrl = "https://serene-shelf-84252.herokuapp.com/" //proxy for CORS
         var mlUrl = "https://asia-east2-igneous-stone-276102.cloudfunctions.net/facialEmotionPredictor-2"
 
 
@@ -98,15 +99,23 @@ export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
           // then will console log it.
           .then(response => response.text())
           .then(result => {
+            emoCount++;
+            var boredom = Number(result.substring(0, result.indexOf(",")).trim())
+            var frustration = Number(result.substring(result.indexOf(",") + 1))
             var display = document.getElementById("api-result");
-            if (display === null) {
-              console.log("brfv5 stopped.")
+            var displayEmo = document.getElementById("emotion-evaluation");
+
+            console.log("Boredom:", boredom)
+            console.log("Frustration:", frustration)
+            console.log("Total emotion data count: ", emoCount)
+            if (boredom > 0.35) {
+              displayEmo.innerText = "You are bored."
             }
-            else {
-              console.log(result)
-              var display = document.getElementById("api-result");
-              display.innerText = result;
+            else if (frustration > 0.35) {
+              displayEmo.innerText = "You are frustrated."
             }
+
+            display.innerText = result;
           })
           .catch(error => console.log('error: ', error));
 

@@ -338,7 +338,7 @@ const onImageDataUpdate = (imageData, activeCanvas, inactiveCanvas, trackOnlyOnc
   const numUpdates = !trackOnlyOnce ? 1 : _brfv5Config.faceTrackingConfig.numFacesToTrack * 2
 
   for (let i = 0; i < numUpdates; i++) {
-    console.log("CAMERA IS ON.")
+    console.log("CAMERA IS ON")
     _brfv5Manager.update(imageData)
 
   }
