@@ -32,7 +32,11 @@ const faceExtended = new BRFv5FaceExtended()
 
 let lmData = "";
 let count = 0;
-let emoCount = 0;
+let strikeCount = 5; // for easier change of values.
+let boredomStrikeCount = strikeCount;
+let frustrationStrikeCount = strikeCount;
+let emotionData = [];
+
 
 export const configureExample = (brfv5Config) => {
 
@@ -99,20 +103,60 @@ export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
           // then will console log it.
           .then(response => response.text())
           .then(result => {
-            emoCount++;
             var boredom = Number(result.substring(0, result.indexOf(",")).trim())
             var frustration = Number(result.substring(result.indexOf(",") + 1))
             var display = document.getElementById("api-result");
             var displayEmo = document.getElementById("emotion-evaluation");
+            emotionData.push([boredom, frustration])
 
             console.log("Boredom:", boredom)
             console.log("Frustration:", frustration)
-            console.log("Total emotion data count: ", emoCount)
-            if (boredom > 0.35) {
-              displayEmo.innerText = "You are bored."
+            console.log("Total emotion data count: ", emotionData.length)
+
+            if (emotionData.length == 45) {
+              // first, get all bored and frustrate values out
+              // then add them up to get total bored and total frustrate.
+              // then divide by length of emotionData and x 100 to get % of bored and % of frustrated.
+
+              let totalBored = 0
+              let totalFrus = 0
+              for (let i = 0; i < emotionData.length; i ++) {
+                let boredVal = emotionData[i][0]
+                let frusVal = emotionData[i][1]
+                
+                totalBored += boredVal
+                totalFrus += frusVal
+              }
+              //Divide by length and times 100, round to 2 dec places
+              let percBored = Math.round((totalBored / emotionData.length * 100 + Number.EPSILON) * 100) / 100
+              let percFrus = Math.round((totalFrus / emotionData.length * 100 + Number.EPSILON) * 100) / 100
+              console.log("User was "+ percBored + "% bored.")
+              console.log("User was "+ percFrus + "% frustrated.")
+
             }
-            else if (frustration > 0.35) {
-              displayEmo.innerText = "You are frustrated."
+
+            if (boredomStrikeCount == 0) {
+              console.log("USER IS VERY BORED")
+              // TODO - send notification or smth
+            }
+
+            if (frustrationStrikeCount == 0) {
+              console.log("USER IS VERY FRUSTRATED")
+              // TODO - send notification or smth
+            }
+
+            if (boredom > 0.35) {
+              boredomStrikeCount--;
+            }
+            else {
+              boredomStrikeCount = strikeCount;
+            }
+
+            if (frustration > 0.35) {
+              frustrationStrikeCount--;
+            }
+            else {
+              frustrationStrikeCount = strikeCount;
             }
 
             display.innerText = result;
