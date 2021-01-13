@@ -13,8 +13,6 @@ import { SessionMyPage } from '../session-my/session-my.page';
 import { Observable } from 'rxjs/internal/Observable';
 import { HTTP } from '@ionic-native/http/ngx';
 import { TestBed } from '@angular/core/testing';
-import { run } from "../../../assets/js/examples/face_tracking__track_one_face.js";
-import { closeCamera } from '../../../assets/js/ui/ui__input__camera.js'
 @Component({
   selector: 'app-session-assignment-view',
   templateUrl: './session-assignment-view.page.html',
@@ -48,18 +46,12 @@ export class SessionAssignmentViewPage implements OnInit {
     this.studentid=this.globalService.getselectedStudentId()
     this.getAssignmentList();
     this.tutornamefordisplay=this.assignmentsService.getselectedtutorname()
-
-    // Starts brfv5 face tracking
-    this.brf_run();
   }
   ionViewDidEnter(){
 
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.router.navigateByUrl('tabs/session-view/session-view/'+this.sessionid)
     });
-  }
-  ionViewWillLeave() {
-    this.brf_stop();
   }
 
 /*Get AssignmentList*/
@@ -173,12 +165,10 @@ async UpdateData(event)
    {
    this.isactiveassignment="inactivesegment";
    this.isactivevideoorvoice="activesegment";
-   this.brf_stop();
    }
    else if (this.segmentModel=="assignment"){
      this.isactiveassignment="activesegment";
      this.isactivevideoorvoice="inactivesegment";
-    this.brf_run();
    }
  }
 /*Chat Pop up*/
@@ -251,15 +241,4 @@ StayonPage(asgmtid)
     });
     return await modal.present();
   }
-  //Opens camera and begins brfv5 face tracking
-  brf_run() {
-    run();
-    console.log("brfv5 started")
-  }
-  // Stops camera and brfv5
-  brf_stop() {
-    closeCamera();
-    console.log("camera closed")
-  }
-  
 }

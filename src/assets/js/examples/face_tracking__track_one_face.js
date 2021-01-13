@@ -27,16 +27,13 @@ import { BRFv5FaceExtended } from '../utils/utils__face_extended.js'
 import { brfv5 } from '../brfv5/brfv5__init.js'
 
 import { SystemUtils } from '../utils/utils__system.js'
+import { closeCamera } from '../ui/ui__input__camera.js'
 
 const faceExtended = new BRFv5FaceExtended()
 
 let lmData = "";
 let count = 0;
-let strikeCount = 5; // for easier change of values.
-let boredomStrikeCount = strikeCount;
-let frustrationStrikeCount = strikeCount;
 let emotionData = [];
-
 
 export const configureExample = (brfv5Config) => {
 
@@ -113,51 +110,27 @@ export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
             console.log("Frustration:", frustration)
             console.log("Total emotion data count: ", emotionData.length)
 
-            if (emotionData.length == 45) {
-              // first, get all bored and frustrate values out
-              // then add them up to get total bored and total frustrate.
-              // then divide by length of emotionData and x 100 to get % of bored and % of frustrated.
+            // if (emotionData.length == 45) {
+            //   // first, get all bored and frustrate values out
+            //   // then add them up to get total bored and total frustrate.
+            //   // then divide by length of emotionData and x 100 to get % of bored and % of frustrated.
 
-              let totalBored = 0
-              let totalFrus = 0
-              for (let i = 0; i < emotionData.length; i ++) {
-                let boredVal = emotionData[i][0]
-                let frusVal = emotionData[i][1]
+            //   let totalBored = 0
+            //   let totalFrus = 0
+            //   for (let i = 0; i < emotionData.length; i ++) {
+            //     let boredVal = emotionData[i][0]
+            //     let frusVal = emotionData[i][1]
                 
-                totalBored += boredVal
-                totalFrus += frusVal
-              }
-              //Divide by length and times 100, round to 2 dec places
-              let percBored = Math.round((totalBored / emotionData.length * 100 + Number.EPSILON) * 100) / 100
-              let percFrus = Math.round((totalFrus / emotionData.length * 100 + Number.EPSILON) * 100) / 100
-              console.log("User was "+ percBored + "% bored.")
-              console.log("User was "+ percFrus + "% frustrated.")
+            //     totalBored += boredVal
+            //     totalFrus += frusVal
+            //   }
+            //   //Divide by length and times 100, round to 2 dec places
+            //   let percBored = Math.round((totalBored / emotionData.length * 100 + Number.EPSILON) * 100) / 100
+            //   let percFrus = Math.round((totalFrus / emotionData.length * 100 + Number.EPSILON) * 100) / 100
+            //   console.log("User was "+ percBored + "% bored.")
+            //   console.log("User was "+ percFrus + "% frustrated.")
 
-            }
-
-            if (boredomStrikeCount == 0) {
-              console.log("USER IS VERY BORED")
-              // TODO - send notification or smth
-            }
-
-            if (frustrationStrikeCount == 0) {
-              console.log("USER IS VERY FRUSTRATED")
-              // TODO - send notification or smth
-            }
-
-            if (boredom > 0.35) {
-              boredomStrikeCount--;
-            }
-            else {
-              boredomStrikeCount = strikeCount;
-            }
-
-            if (frustration > 0.35) {
-              frustrationStrikeCount--;
-            }
-            else {
-              frustrationStrikeCount = strikeCount;
-            }
+            // }
 
             display.innerText = result;
           })
@@ -213,7 +186,12 @@ export const run = () => {
   }
 }
 
+export const stopAndCollate = () => {
+  closeCamera();
+  return emotionData;
+}
+
 timeoutId = setTimeout(function () { run() }, 1000)
 
-export default { run }
+export default { run, stopAndCollate }
 
