@@ -12,7 +12,7 @@ export class SessionViewImageDiscussionPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // console.log(`${this.imagedisplay}`)
+    console.log(this.imagedisplay)
   }
   ionViewWillEnter() {
     this.brf_run();
@@ -35,29 +35,42 @@ export class SessionViewImageDiscussionPage implements OnInit {
     console.log("camera closed")
   }
   emotionEvaluation(emotionData, duration) {
-    let totalBored = 0
-    let totalFrus = 0
+    // This function will count how many times an emotion reaches higher than the threshold
+    // That count will then be divided by the count of datasets to get the percentage
+    // eg. Bored > 0.4 Count / Bored Count. Then it will times the duration to get how long the student 
+    // experiences that emotion.
+    let moreThanBoredCount = 0
+    let moreThanFrusCount = 0
+    let threshold = 0.4
+
     for (let i = 0; i < emotionData.length; i++) {
-      // in rare cases, there may be errors fetching data from the API call.
-      // that will cause the emotionData array to be corrupted with unaccepted values
-      // and cause this entire function to cease working. BUT it is rare.
       let boredVal = emotionData[i][0]
       let frusVal = emotionData[i][1]
 
-      totalBored += boredVal
-      totalFrus += frusVal
+      if (boredVal > threshold) {
+        moreThanBoredCount += 1
+      }
+      if (frusVal > threshold) {
+        moreThanFrusCount += 1
+      }
     }
-    //Divide by length and times 100, round to 2 dec places
-    let percBored = Math.round((totalBored / emotionData.length * 100 + Number.EPSILON)) / 100
-    let percFrus = Math.round((totalFrus / emotionData.length * 100 + Number.EPSILON)) / 100
+    console.log("BORED Count", moreThanBoredCount)
+    console.log("FRUS Count", moreThanFrusCount)
+
+    let percBored = moreThanBoredCount / emotionData.length
+    let percFrus = moreThanFrusCount / emotionData.length
+
     console.log("BORED %", percBored)
     console.log("FRUS %", percFrus)
 
     let durBored = Math.round(percBored * duration / 1000)
     let durFrus = Math.round(percFrus * duration / 1000)
 
-    console.log("BORED (s)" + durBored)
+    console.log("BORED (s) " + durBored)
     console.log("FRUS (s) " + durFrus)
+
+    // TODO - Send API call to db to store variables. 
+    // Student id, assignment id, assignment discussion id, bored dur, frus dur, duration
   }
   getDuration() {
     //Calculates the time the user spends on this page, returns value in ms. 1000ms = 1s

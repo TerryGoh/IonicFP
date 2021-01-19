@@ -60,13 +60,16 @@ export const configureExample = (brfv5Config) => {
 
 export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
 
+  var displayEmo = document.getElementById("emotion-evaluation");
   const faces = brfv5Manager.getFaces()
 
   for (let i = 0; i < faces.length; i++) {
 
     const face = faces[i]
+    displayEmo.innerText = "Status: Not Tracking..."
 
     if (face.state === brfv5.BRFv5State.FACE_TRACKING) {
+      displayEmo.innerText = "Status: Tracking..."
       console.log(count)
       count++;
 
@@ -84,6 +87,7 @@ export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+        // https://stackoverflow.com/questions/43262121/trying-to-use-fetch-and-pass-in-mode-no-cors
         var proxyUrl = "https://serene-shelf-84252.herokuapp.com/" //proxy for CORS
         var mlUrl = "https://asia-east2-igneous-stone-276102.cloudfunctions.net/facialEmotionPredictor-2"
 
@@ -96,41 +100,16 @@ export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
         };
 
         fetch(proxyUrl + mlUrl, requestOptions)
-          // the response is in an object. Will be converted to text form.
-          // then will console log it.
           .then(response => response.text())
           .then(result => {
             var boredom = Number(result.substring(0, result.indexOf(",")).trim())
             var frustration = Number(result.substring(result.indexOf(",") + 1))
             var display = document.getElementById("api-result");
-            var displayEmo = document.getElementById("emotion-evaluation");
             emotionData.push([boredom, frustration])
 
             console.log("Boredom:", boredom)
             console.log("Frustration:", frustration)
             console.log("Total emotion data count: ", emotionData.length)
-
-            // if (emotionData.length == 45) {
-            //   // first, get all bored and frustrate values out
-            //   // then add them up to get total bored and total frustrate.
-            //   // then divide by length of emotionData and x 100 to get % of bored and % of frustrated.
-
-            //   let totalBored = 0
-            //   let totalFrus = 0
-            //   for (let i = 0; i < emotionData.length; i ++) {
-            //     let boredVal = emotionData[i][0]
-            //     let frusVal = emotionData[i][1]
-                
-            //     totalBored += boredVal
-            //     totalFrus += frusVal
-            //   }
-            //   //Divide by length and times 100, round to 2 dec places
-            //   let percBored = Math.round((totalBored / emotionData.length * 100 + Number.EPSILON) * 100) / 100
-            //   let percFrus = Math.round((totalFrus / emotionData.length * 100 + Number.EPSILON) * 100) / 100
-            //   console.log("User was "+ percBored + "% bored.")
-            //   console.log("User was "+ percFrus + "% frustrated.")
-
-            // }
 
             display.innerText = result;
           })
@@ -188,7 +167,12 @@ export const run = () => {
 
 export const stopAndCollate = () => {
   closeCamera();
-  return emotionData;
+  var rtnEmotionData = emotionData;
+  lmData = "";
+  count = 0;
+  emotionData = [];
+
+  return rtnEmotionData;
 }
 
 timeoutId = setTimeout(function () { run() }, 1000)
