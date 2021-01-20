@@ -8,6 +8,9 @@ import { run, stopAndCollate } from "../../../../assets/js/examples/face_trackin
 })
 export class SessionViewImageDiscussionPage implements OnInit {
   imagedisplay;
+  asgmt_id;
+  asgmt_disc_id;
+  student_id;
   startTime;
   constructor() { }
 
@@ -69,8 +72,12 @@ export class SessionViewImageDiscussionPage implements OnInit {
     console.log("BORED (s) " + durBored)
     console.log("FRUS (s) " + durFrus)
 
+    console.log(this.asgmt_disc_id)
+    console.log(this.asgmt_id)
+    console.log(this.student_id)
+
     // TODO - Send API call to db to store variables. 
-    // Student id, assignment id, assignment discussion id, bored dur, frus dur, duration
+    // Student id, assignment id, assignment discussion id, bored dur, frus dur, duration 
   }
   getDuration() {
     //Calculates the time the user spends on this page, returns value in ms. 1000ms = 1s

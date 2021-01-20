@@ -37,25 +37,13 @@ let emotionData = [];
 
 export const configureExample = (brfv5Config) => {
 
-  // In most cases you only want to track one face. If you need to track more than one face
-  // at a time, performance will be lower, because face tracking is a CPU intensive task.
-
   brfv5Config.faceTrackingConfig.numFacesToTrack = 1
-
-  // numTrackingPasses: 3 (default), can either be 1, 2, 3, 4, 5 or 6.
-  // 3 is a good trade-off between accuracy/stability and performance.
-  // While 1 and 2 don't calculate the simple confidence value, 3 to 6 do.
-  // The confidence value helps with resetting, if tracking should be lost be
-  // keeps on tracking in wrong locations.
-
-  // enableFreeRotation: true (default)
-  // Enables rotationZ (head roll) to be larger than 34 degrees. This increased freedom
-  // of head movement results in a bit of a performance loss, but it's most likely worth it.
-  // Set it to false to restrict the head roll to -34 .. 0 .. 34 degrees.
-
-  brfv5Config.faceTrackingConfig.numTrackingPasses = 3
+  brfv5Config.faceTrackingConfig.numTrackingPasses = 6
   brfv5Config.faceTrackingConfig.enableFreeRotation = true
   brfv5Config.faceTrackingConfig.maxRotationZReset = 999.0
+  brfv5Config.faceTrackingConfig.minFaceScaleReset = 70.0
+  brfv5Config.faceTrackingConfig.maxFaceScaleReset = 250.0
+
 }
 
 export const handleTrackingResults = (brfv5Manager, brfv5Config, canvas) => {
