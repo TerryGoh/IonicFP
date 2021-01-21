@@ -12,10 +12,15 @@ export class SessionViewImageDiscussionPage implements OnInit {
   asgmt_disc_id;
   student_id;
   startTime;
+  auth_token;
   constructor() { }
 
   ngOnInit() {
-    console.log(this.imagedisplay)
+    // console.log(this.imagedisplay)
+    // console.log("asgmt discuss ", this.asgmt_disc_id)
+    // console.log("asgmt ", this.asgmt_id)
+    // console.log("stu ", this.student_id)
+    // console.log("auth", this.auth_token)
   }
   ionViewWillEnter() {
     this.brf_run();
@@ -57,33 +62,52 @@ export class SessionViewImageDiscussionPage implements OnInit {
         moreThanFrusCount += 1
       }
     }
-    console.log("BORED Count", moreThanBoredCount)
-    console.log("FRUS Count", moreThanFrusCount)
-
     let percBored = moreThanBoredCount / emotionData.length
     let percFrus = moreThanFrusCount / emotionData.length
-
-    console.log("BORED %", percBored)
-    console.log("FRUS %", percFrus)
 
     let durBored = Math.round(percBored * duration / 1000)
     let durFrus = Math.round(percFrus * duration / 1000)
 
-    console.log("BORED (s) " + durBored)
-    console.log("FRUS (s) " + durFrus)
-
-    console.log(this.asgmt_disc_id)
-    console.log(this.asgmt_id)
-    console.log(this.student_id)
-
     // TODO - Send API call to db to store variables. 
-    // Student id, assignment id, assignment discussion id, bored dur, frus dur, duration 
+    // Auth token, Student id, assignment id, assignment discussion id, bored dur, frus dur, duration 
+
+    let jsonData = {
+      Authentication_Token: this.auth_token,
+      Student_Id: this.student_id,
+      asgmt_Id: this.asgmt_id,
+      asgmtDiscuss_Id: this.asgmt_disc_id,
+      duration: Math.round(duration / 1000),
+      frustDuration: durFrus,
+      boredomDuration: durBored
+    }
+
+    console.log("JSON Data: ", jsonData)
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    // https://stackoverflow.com/questions/43262121/trying-to-use-fetch-and-pass-in-mode-no-cors
+    var proxyUrl = "https://serene-shelf-84252.herokuapp.com/" //proxy for CORS
+    var dbApiUrl = "https://slpidev.azurewebsites.net/api/analysis/addAnalysisAsgmtDiscuss"
+
+    var requestOptions: RequestInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(jsonData),
+      redirect: 'follow'
+    };
+
+    fetch(proxyUrl + dbApiUrl, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result)
+      })
+      .catch(error => console.log('error: ', error));
   }
   getDuration() {
     //Calculates the time the user spends on this page, returns value in ms. 1000ms = 1s
     let endTime = new Date();
     let duration = endTime.getTime() - this.startTime.getTime();
-    console.log("Time spent on page(secs): ", duration / 1000)
     return duration
   }
 }

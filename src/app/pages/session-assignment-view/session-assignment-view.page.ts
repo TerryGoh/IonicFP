@@ -232,14 +232,15 @@ StayonPage(asgmtid)
     });
     return await modal.present();
   }
-  async presentModalDiscussImage(imgdisplayinapp, asgmt_id, asgmt_disc_id, student_id) {
+  async presentModalDiscussImage(imgdisplayinapp, asgmt_id, asgmt_disc_id, student_id, auth_token) {
     const modal = await this.modalController.create({
       component: SessionViewImageDiscussionPage,
       componentProps: { 
         imagedisplay: this.display(imgdisplayinapp),
         asgmt_id: asgmt_id,
         asgmt_disc_id: asgmt_disc_id,
-        student_id: student_id
+        student_id: student_id,
+        auth_token: auth_token
       }
     });
     return await modal.present();

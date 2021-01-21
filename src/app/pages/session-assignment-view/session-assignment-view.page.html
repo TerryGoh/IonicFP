@@ -54,7 +54,7 @@
         <div class="scrolling-wrapper">
           <div *ngFor="let asgmtlist of asgmtdiscusslist"  class="card"><h2>
             <ion-label style="font-size: medium;">{{asgmtlist.created_On | date:'medium'}}</ion-label><br/>
-            <img style="width:10em;height:10em" (click)="presentModalDiscussImage(asgmtlist.asgmtDiscuss_Data, asgmtlist.asgmt_Id, asgmtlist.asgmtDiscuss_Id, this.studentid)" *ngIf="asgmtlist.asgmtDiscuss_Data!=null" [src]="this.display(asgmtlist.asgmtDiscuss_Data)"><br/>
+            <img style="width:10em;height:10em" (click)="presentModalDiscussImage(asgmtlist.asgmtDiscuss_Data, asgmtlist.asgmt_Id, asgmtlist.asgmtDiscuss_Id, this.studentid, this.token)" *ngIf="asgmtlist.asgmtDiscuss_Data!=null" [src]="this.display(asgmtlist.asgmtDiscuss_Data)"><br/>
             <ion-label style="font-size: medium;" *ngIf="asgmtlist.created_By_Username!=null">Commented By: <b>{{asgmtlist.created_By_Username}} ({{asgmtlist.created_By_Level}})</b></ion-label><br/>
             <ion-label style="font-size: medium;" *ngIf="asgmtlist.created_By_Username==null">Commented By: <b>{{tutornamefordisplay}}</b></ion-label><br/>
           </h2>
