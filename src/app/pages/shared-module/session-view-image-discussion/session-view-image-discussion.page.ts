@@ -33,7 +33,7 @@ export class SessionViewImageDiscussionPage implements OnInit {
 
   testFaceApi() {
     var endpoint = "https://fypjface.cognitiveservices.azure.com/"
-    var subscriptionKey = "1d40c6a23cd640d9ae5df348c2090977"
+    var subscriptionKey = ""
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
