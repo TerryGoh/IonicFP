@@ -25,12 +25,49 @@ export class SessionViewImageDiscussionPage implements OnInit {
   ionViewWillEnter() {
     this.brf_run();
     this.startTime = new Date();
+    this.testFaceApi();
   }
   ionViewWillLeave() {
     this.brf_stop();
   }
 
+  testFaceApi() {
+    var endpoint = "https://fypjface.cognitiveservices.azure.com/"
+    var subscriptionKey = "1d40c6a23cd640d9ae5df348c2090977"
 
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+  //   var params = {
+  //     "returnFaceId": "true",
+  //     "returnFaceLandmarks": "false",
+  //     "returnFaceAttributes": "{string}",
+  //     "recognitionModel": "recognition_03",
+  //     "returnRecognitionModel": "false",
+  //     "detectionModel": "detection_02",
+  //     "faceIdTimeToLive": "86400",
+  // };
+
+    var apiUrl = endpoint + "face/v1.0/detect"
+    var jsonData = {
+      "url": "https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzg5ODI4MTEw/barack-obama-12782369-1-402.jpg"
+    }
+
+    var requestOptions: RequestInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: JSON.stringify(jsonData),
+      redirect: 'follow'
+    };
+
+    fetch(apiUrl, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result)
+      })
+      .catch(error => console.log('error: ', error));
+  }
   //Opens camera and begins brfv5 face tracking
   brf_run() {
     run();
@@ -45,8 +82,8 @@ export class SessionViewImageDiscussionPage implements OnInit {
   emotionEvaluation(emotionData, duration) {
     // This function will count how many times an emotion reaches higher than the threshold
     // That count will then be divided by the count of datasets to get the percentage
-    // eg. Bored > 0.4 Count / Bored Count. Then it will times the duration to get how long the student 
-    // experiences that emotion.
+    // eg. Bored > 0.4 Count / Bored Count. Then it will multiply the duration to get how long 
+    // the student experiences that emotion.
     let moreThanBoredCount = 0
     let moreThanFrusCount = 0
     let threshold = 0.4
@@ -68,8 +105,7 @@ export class SessionViewImageDiscussionPage implements OnInit {
     let durBored = Math.round(percBored * duration / 1000)
     let durFrus = Math.round(percFrus * duration / 1000)
 
-    // TODO - Send API call to db to store variables. 
-    // Auth token, Student id, assignment id, assignment discussion id, bored dur, frus dur, duration 
+    // Send API call to db to store variables. 
 
     let jsonData = {
       Authentication_Token: this.auth_token,
@@ -81,7 +117,7 @@ export class SessionViewImageDiscussionPage implements OnInit {
       boredomDuration: durBored
     }
 
-    console.log("JSON Data: ", jsonData)
+    // console.log("JSON Data: ", jsonData)
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
