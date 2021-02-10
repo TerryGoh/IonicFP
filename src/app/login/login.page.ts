@@ -8,6 +8,7 @@ import {EmailComposer} from '@ionic-native/email-composer/ngx';
 import { Platform } from '@ionic/angular';
 import {AlertController} from '@ionic/angular';
 import { AssignmentsService } from '../services/assignments.service';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx'
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
     private nativeHttp:HTTP,
     private toastService: ToastService,
     private assignmentsService: AssignmentsService,
-    public composer: EmailComposer) { }
+    public composer: EmailComposer, 
+    private camera: Camera) { }
 
   showPassword3 = false;
   passwordToggleIcon3 = "eye";
@@ -131,4 +133,47 @@ ionViewDidEnter(){
 
  });
  }
+
+ openCamera() {
+   const cameraOptions = {
+    saveToPhotoAlbum: false,
+    cameraDirection: 1, // front-facing camera = 1, back-facing(def) = 0
+    destinationType: 0 // base-64 = 0, file-uri(def) = 1
+   }
+   this.camera.getPicture(cameraOptions).then((imageData) => {
+    // var image = 'data:image/jpeg;base64,' + imageData
+    // console.log(image)
+    this.faceapiCall(imageData)
+   }, (err) => {
+     console.log("Camera issue:" + err)
+   })
+ }
+ 
+faceapiCall(imageData) {
+  // https://stackoverflow.com/questions/43262121/trying-to-use-fetch-and-pass-in-mode-no-cors
+  var proxyUrl = "https://serene-shelf-84252.herokuapp.com/" //proxy for CORS
+  var apiUrl = "https://stark-shore-14544.herokuapp.com/face"
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var jsonData = {
+    face: imageData
+  }
+
+  var requestOptions: RequestInit = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(jsonData),
+    redirect: 'follow'
+  };
+
+  fetch(proxyUrl+ apiUrl, requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result)
+    })
+    .catch(error => console.log('error: ', error));
+ }
+
 }

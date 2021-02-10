@@ -16,7 +16,7 @@ export class SessionViewImageDiscussionPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // console.log(this.imagedisplay)
+    console.log(this.imagedisplay)
     // console.log("asgmt discuss ", this.asgmt_disc_id)
     // console.log("asgmt ", this.asgmt_id)
     // console.log("stu ", this.student_id)
@@ -25,12 +25,12 @@ export class SessionViewImageDiscussionPage implements OnInit {
   ionViewWillEnter() {
     this.brf_run();
     this.startTime = new Date();
-    this.testFaceApi();
   }
   ionViewWillLeave() {
     this.brf_stop();
   }
 
+<<<<<<< Updated upstream
   testFaceApi() {
     var endpoint = "https://fypjface.cognitiveservices.azure.com/"
     var subscriptionKey = ""
@@ -68,6 +68,8 @@ export class SessionViewImageDiscussionPage implements OnInit {
       })
       .catch(error => console.log('error: ', error));
   }
+=======
+>>>>>>> Stashed changes
   //Opens camera and begins brfv5 face tracking
   brf_run() {
     run();
