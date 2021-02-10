@@ -30,46 +30,6 @@ export class SessionViewImageDiscussionPage implements OnInit {
     this.brf_stop();
   }
 
-<<<<<<< Updated upstream
-  testFaceApi() {
-    var endpoint = "https://fypjface.cognitiveservices.azure.com/"
-    var subscriptionKey = ""
-
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Ocp-Apim-Subscription-Key", subscriptionKey);
-
-  //   var params = {
-  //     "returnFaceId": "true",
-  //     "returnFaceLandmarks": "false",
-  //     "returnFaceAttributes": "{string}",
-  //     "recognitionModel": "recognition_03",
-  //     "returnRecognitionModel": "false",
-  //     "detectionModel": "detection_02",
-  //     "faceIdTimeToLive": "86400",
-  // };
-
-    var apiUrl = endpoint + "face/v1.0/detect"
-    var jsonData = {
-      "url": "https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzg5ODI4MTEw/barack-obama-12782369-1-402.jpg"
-    }
-
-    var requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify(jsonData),
-      redirect: 'follow'
-    };
-
-    fetch(apiUrl, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        console.log(result)
-      })
-      .catch(error => console.log('error: ', error));
-  }
-=======
->>>>>>> Stashed changes
   //Opens camera and begins brfv5 face tracking
   brf_run() {
     run();
