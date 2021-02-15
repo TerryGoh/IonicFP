@@ -6,7 +6,7 @@ import {apiurl} from '../model/global-api';
 import { ToastService } from './../services/toast.service';
 import {EmailComposer} from '@ionic-native/email-composer/ngx';
 import { Platform } from '@ionic/angular';
-import {AlertController} from '@ionic/angular';
+import { LoadingController, AlertController} from '@ionic/angular';
 import { AssignmentsService } from '../services/assignments.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx'
 
@@ -17,7 +17,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx'
 })
 export class LoginPage implements OnInit {
   constructor(
-    private alertController: AlertController, 
+    private alertController: AlertController,
+    public loadingController: LoadingController,
     private router:Router,
     private platform: Platform,
     private storage:Storage,
@@ -27,6 +28,7 @@ export class LoginPage implements OnInit {
     public composer: EmailComposer, 
     private camera: Camera) { }
 
+  loading: any;
   showPassword3 = false;
   passwordToggleIcon3 = "eye";
 
@@ -134,16 +136,37 @@ ionViewDidEnter(){
  });
  }
 
+  //Loading Pop up
+  async presentLoading() {
+    // Prepare a loading controller
+    this.loading = await this.loadingController.create({
+      message: 'Please Wait',
+      cssClass: 'custom-class custom-loading',
+      duration: 60000,
+      backdropDismiss: false
+    });
+    // Present the loading controller
+
+    await this.loading.present();
+  }
+
  openCamera() {
    const cameraOptions = {
     saveToPhotoAlbum: false,
     cameraDirection: 1, // front-facing camera = 1, back-facing(def) = 0
-    destinationType: 0 // base-64 = 0, file-uri(def) = 1
+    destinationType: 0, // base-64 = 0, file-uri(def) = 1
+    quality: 10
    }
    this.camera.getPicture(cameraOptions).then((imageData) => {
-    // var image = 'data:image/jpeg;base64,' + imageData
-    // console.log(image)
-    this.faceapiCall(imageData)
+    console.log(imageData)
+    this.presentLoading()
+    this.faceapiCall(imageData).then((faceDescription) => {
+      this.loading.dismiss()
+      console.log(faceDescription.faceDescriptors)
+      this.toastService.presentToast(
+        faceDescription
+      );
+    })
    }, (err) => {
      console.log("Camera issue:" + err)
    })
@@ -168,12 +191,10 @@ faceapiCall(imageData) {
     redirect: 'follow'
   };
 
-  fetch(proxyUrl+ apiUrl, requestOptions)
-    .then(response => response.text())
-    .then(result => {
-      console.log(result)
-    })
+  return fetch(proxyUrl+ apiUrl, requestOptions)
+    .then(resp => resp.json())
     .catch(error => console.log('error: ', error));
  }
+
 
 }
