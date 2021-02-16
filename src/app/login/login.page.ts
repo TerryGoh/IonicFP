@@ -98,6 +98,7 @@ ionViewDidEnter(){
   .then(async response => {
     try {
       response.data = JSON.parse(response.data);
+      console.log(response.data)
       this.storage.set('authlogin', response.data); 
       this.postData.Username = ''
       this.postData.Password = ''
@@ -158,14 +159,27 @@ ionViewDidEnter(){
     quality: 10
    }
    this.camera.getPicture(cameraOptions).then((imageData) => {
-    console.log(imageData)
     this.presentLoading()
+    // console.log(imageData)
     this.faceapiCall(imageData).then((faceDescription) => {
       this.loading.dismiss()
       console.log(faceDescription.faceDescriptors)
-      this.toastService.presentToast(
-        faceDescription
-      );
+      // this if statement just checks whether the response from the api
+      // says if there is a face or not.
+      if (faceDescription.faceDescriptors[0] != "N") {
+        this.toastService.presentToast(
+          "Face detected."
+        );  
+
+          this.postData.Username = "john"
+          this.postData.Password = "Pwd123"
+          this.AuthLogin()
+      } else {
+        this.toastService.presentToast(
+          "No faces were detected."
+        );
+
+      }
     })
    }, (err) => {
      console.log("Camera issue:" + err)
